@@ -1,0 +1,33 @@
+import torch
+from torch import nn
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+print("PyTorch Version:", torch.__version__)
+print("CUDA Available:", torch.cuda.is_available())
+print("Device:", device)
+
+df = pd.read_csv('data/rocket_tiny.csv', skiprows=1)
+print(df.head())
+#self.features = ['Tclk','MaxTran','Uncertainty','Fanout']
+#self.targets = ['Slack','CriticalPathDelay','ArrivalTime']
+print(df.describe())
+
+SCALE_FACTORS = {
+    'Tclk': 10000.0,
+    'MaxTran': 500.0,
+    'Uncertainty': 200.0,
+    'Fanout': 50.0,
+    'Slack': 10000.0,
+    'CriticalPathDelay': 10000.0,
+    'ArrivalTime': 10000.0
+}
+
+print(df.isnull().sum())
+df[['Slack', 'CriticalPathDelay', 'ArrivalTime']].hist(bins=50)
+plt.show()
+
